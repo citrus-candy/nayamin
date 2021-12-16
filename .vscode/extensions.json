@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "johnsoncodehk.volar",
+    "vscode-icons-team.vscode-icons",
+    "bradlc.vscode-tailwindcss",
+    "xabikos.javascriptsnippets",
+    "oderwat.indent-rainbow",
+    "ecmel.vscode-html-css",
+    "formulahendry.auto-rename-tag",
+    "formulahendry.auto-close-tag"
+  ]
+}
