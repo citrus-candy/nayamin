@@ -1,8 +1,23 @@
-# Nuxt 3 Minimal Starter
+# チーム：ねこまんま
+
+## メンバー
+
+- [@citrus-candy](https://github.com/citrus-candy)
+- [@Simo-C3](https://github.com/Simo-C3)
+- [@pikake](https://github.com/pikake)
+
+## 仕様技術
+
+- firebase
+- Nuxt 3
+- tailwindcss
+- bootstrap
+
+## Nuxt 3 Minimal Starter
 
 We recommend to look at the [documentation](https://v3.nuxtjs.org).
 
-## Setup
+### Setup
 
 Make sure to install the dependencies
 
@@ -10,15 +25,15 @@ Make sure to install the dependencies
 yarn install
 ```
 
-## Development
+### Development
 
-Start the development server on http://localhost:3000
+Start the development server on <http://localhost:3000>
 
 ```bash
 yarn dev
 ```
 
-## Production
+### Production
 
 Build the application for production:
 
