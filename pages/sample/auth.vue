@@ -1,18 +1,11 @@
 <script setup lang="ts">
-import {
-	getAuth,
-	createUserWithEmailAndPassword,
-	signInWithEmailAndPassword,
-	signOut,
-} from 'firebase/auth'
-
 const email = ref('')
 const password = ref('')
 const status = ref('')
 const errorText = ref('')
-const signUp = async () => {
-	const auth = getAuth()
-	await createUserWithEmailAndPassword(auth, email.value, password.value)
+
+const signUp = () => {
+	_signUp(email.value, password.value)
 		.then((userCredential) => {
 			console.log(userCredential)
 			status.value = '新規登録に成功しました'
@@ -21,9 +14,8 @@ const signUp = async () => {
 			errorText.value = error
 		})
 }
-const signIn = async () => {
-	const auth = getAuth()
-	await signInWithEmailAndPassword(auth, email.value, password.value)
+const signIn = () => {
+	_signIn(email.value, password.value)
 		.then((userCredential) => {
 			console.log(userCredential)
 			status.value = 'ログインに成功しました'
@@ -32,9 +24,8 @@ const signIn = async () => {
 			errorText.value = error
 		})
 }
-const logOut = async () => {
-	const auth = getAuth()
-	await signOut(auth)
+const signOut = async () => {
+	_signOut()
 		.then(() => {
 			status.value = 'ログアウトに成功しました'
 		})
@@ -65,7 +56,7 @@ const logOut = async () => {
 			<button @click="signIn" class="bg-blue-100 m-4 px-4 py-2">
 				ログイン
 			</button>
-			<button @click="logOut" class="bg-green-100 m-4 px-4 py-2">
+			<button @click="signOut" class="bg-green-100 m-4 px-4 py-2">
 				ログアウト
 			</button>
 		</div>

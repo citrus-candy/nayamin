@@ -1,90 +1,46 @@
 <script setup lang="ts">
-import {
-	getFirestore,
-	collection,
-	doc,
-	addDoc,
-	updateDoc,
-	deleteDoc,
-	getDoc,
-	serverTimestamp,
-	Timestamp,
-} from 'firebase/firestore'
-
-type Sample = {
-	name: string
-	created_at: Timestamp
-	updated_at: Timestamp
-}
-
 const collectionName: string = 'sample'
 
 const status = ref('')
 const name = ref('')
-const id = ref('')
 const errorText = ref('')
-const data = ref<Sample>({
-	name: '',
-	created_at: null,
-	updated_at: null,
-})
+
+const id = useId()
+const sample = useSample()
 
 const add = async () => {
-	const db = getFirestore()
-	const collectionRef = collection(db, collectionName)
-	await addDoc(collectionRef, {
-		name: name.value,
-		created_at: serverTimestamp(),
-	})
-		.then((doc) => {
+	await _addSampleName(collectionName, name.value)
+		.then(() => {
 			status.value = '名前を追加しました'
-			id.value = doc.id
-			name.value = ''
-			getData()
+			_getSampleName(collectionName)
 		})
 		.catch((error) => {
 			errorText.value = error
 		})
 }
 const update = async () => {
-	const db = getFirestore()
-	const docRef = doc(db, collectionName, id.value)
-	await updateDoc(docRef, {
-		name: name.value,
-		updated_at: serverTimestamp(),
-	})
+	await _updateSampleName(collectionName, name.value)
 		.then(() => {
 			status.value = '名前を更新しました'
-			getData()
+			_getSampleName(collectionName)
 		})
 		.catch((error) => {
 			errorText.value = error
 		})
 }
 const remove = async () => {
-	const db = getFirestore()
-	const docRef = doc(db, collectionName, id.value)
-	await deleteDoc(docRef)
+	await _removeSampleName(collectionName)
 		.then(() => {
 			status.value = '名前を削除しました'
-			id.value = ''
-			name.value = ''
-			getData()
+			sample.value = {
+				name: '',
+				created_at: null,
+				updated_at: null,
+			}
 		})
 		.catch((error) => {
 			errorText.value = error
 		})
-}
-const getData = async () => {
-	const db = getFirestore()
-	const docRef = doc(db, collectionName, id.value)
-	const docSnap = await getDoc(docRef)
-
-	if (docSnap.exists()) {
-		data.value = docSnap.data() as Sample
-	} else {
-		errorText.value = 'No such document!'
-	}
 }
 </script>
 
@@ -130,18 +86,18 @@ const getData = async () => {
 			</thead>
 			<tbody>
 				<tr>
-					<td class="border border-gray-300 p-2">{{ data.name }}</td>
+					<td class="border border-gray-300 p-2">{{ sample.name }}</td>
 					<td
-						v-if="data.created_at !== null"
+						v-if="sample.created_at !== null"
 						class="border border-gray-300 p-2"
 					>
-						{{ data.created_at }}
+						{{ sample.created_at }}
 					</td>
 					<td
-						v-if="data.updated_at !== null"
+						v-if="sample.updated_at !== null"
 						class="border border-gray-300 p-2"
 					>
-						{{ data.updated_at }}
+						{{ sample.updated_at }}
 					</td>
 				</tr>
 			</tbody>
