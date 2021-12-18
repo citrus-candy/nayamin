@@ -1,6 +1,6 @@
 <template>
 	<div class="w-full h-full p-6 border rounded-2xl bg-indigo-500">
-		<InputTextArea />
+		<InputTextArea :placeholderText="'ここに悩みを書く'" />
 		<div class="mb-3 text-white text-2xl">悩み度</div>
 		<div class="flex justify-between items-center">
 			<BaseSlider class="h-full w-3/4" />

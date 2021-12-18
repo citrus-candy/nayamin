@@ -1,5 +1,8 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 const text = ref('')
+defineProps({
+	placeholderText: String,
+})
 </script>
 
 <template>
@@ -10,7 +13,7 @@ const text = ref('')
 			cols="50"
 			rows="10"
 			maxlength="500"
-			placeholder="ここに悩みを書く"
+			:placeholder="placeholderText"
 			required
 			class="w-full h-full break-words border border-black p-4"
 		></textarea>
