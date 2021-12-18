@@ -7,8 +7,12 @@ type MenuBarContents = {
 	color: string
 	to: string
 }
+type Emits = {
+	(e: 'showMenuBar', value: boolean): void
+}
 
 const authState = useAuthState()
+const emit = defineEmits<Emits>()
 
 const showBar = ref(false)
 const showAuthModal = ref(false)
@@ -42,10 +46,14 @@ const signOut = () => {
 			console.log(error)
 		})
 }
+
+watch(showBar, (value) => {
+	emit('showMenuBar', value)
+})
 </script>
 
 <template>
-	<div class="bg-white">
+	<div class="bg-white fixed">
 		<div v-if="!showBar" class="w-16 border-r border-black h-screen">
 			<button class="w-full py-1 hover:bg-slate-100" @click="showBar = true">
 				<FontAwesomeIcon icon="bars" class="w-10 h-10" />
