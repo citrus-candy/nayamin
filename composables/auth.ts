@@ -6,6 +6,7 @@ import {
 } from 'firebase/auth'
 
 export const useAuthState = () => useState<boolean>('authState', () => false)
+export const useUserId = () => useState<string>('userId', () => '')
 
 export const _signUp = async (email: string, password: string) => {
 	const auth = getAuth()
@@ -14,10 +15,14 @@ export const _signUp = async (email: string, password: string) => {
 
 export const _signIn = async (email: string, password: string) => {
 	const auth = getAuth()
-	await signInWithEmailAndPassword(auth, email, password).then(() => {
-		const authState = useAuthState()
-		authState.value = true
-	})
+	await signInWithEmailAndPassword(auth, email, password).then(
+		(userCredential) => {
+			const authState = useAuthState()
+			const userId = useUserId()
+			authState.value = true
+			userId.value = userCredential.user.uid
+		}
+	)
 }
 
 export const _signOut = async () => {
