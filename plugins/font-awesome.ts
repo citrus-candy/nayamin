@@ -11,6 +11,9 @@ import {
 	faComments,
 	faCrown,
 	faBars,
+	faTimes,
+	faEye,
+	faEyeSlash,
   faTag
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -26,6 +29,9 @@ library.add(
 	faComments,
 	faCrown,
 	faBars,
+	faTimes,
+	faEye,
+	faEyeSlash,
   faTag
 )
 
