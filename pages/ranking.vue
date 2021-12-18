@@ -51,54 +51,86 @@ const rankingBgColor = 'bg-indigo-500'
 </script>
 
 <template>
-	<div>
-		<div class="flex border-b border-black h-28 text-2xl">
-			<div class="w-2/12 border-r border-black"></div>
-			<div class="w-5/12 flex items-center justify-center">
-				<p>分かるランキング</p>
-			</div>
-			<div class="w-5/12 flex items-center justify-center">
-				<p>どんまいランキング</p>
-			</div>
-		</div>
-		<div class="flex">
-			<div class="w-2/12 border-r border-black">
-				<div
-					v-for="i in rankingIndex"
-					:key="i"
-					class="h-44 m-10 flex items-center justify-center text-3xl"
-				>
-					<p>{{ i }}st</p>
-				</div>
-			</div>
-			<div class="w-5/12">
-				<BaseCard
-					v-for="question in questions"
-					:key="question.id"
-					:id="question.id"
-					:date="question.date"
-					:tags="question.tag"
-					:bgColor="rankingBgColor"
-					class="m-10"
-				>
-					{{ question.content }}
-				</BaseCard>
-			</div>
-			<div class="w-5/12">
-				<BaseCard
-					v-for="question in questions"
-					:key="question.id"
-					:id="question.id"
-					:date="question.date"
-					:tags="question.tag"
-					:bgColor="rankingBgColor"
-					class="m-10"
-				>
-					{{ question.content }}
-				</BaseCard>
-			</div>
-		</div>
-	</div>
+	<table class="border-collapse text-center">
+		<thead>
+			<tr>
+				<td class="border w-1/5 h-14 bg-amber-50"></td>
+				<td class="text-2xl border w-2/5 bg-amber-50">わかるランキング</td>
+				<td class="text-2xl border w-2/5 bg-amber-50">どんまいランキング</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="text-3xl border">1st</td>
+				<td class="border">
+					<BaseCard
+						class="m-auto"
+						:key="questions[0].id"
+						:id="questions[0].id"
+						:date="questions[0].date"
+						:tags="questions[0].tag"
+						:bgColor="rankingBgColor"
+					/>
+				</td>
+				<td class="border">
+					<BaseCard
+						class="m-auto"
+						:key="questions[0].id"
+						:id="questions[0].id"
+						:date="questions[0].date"
+						:tags="questions[0].tag"
+						:bgColor="rankingBgColor"
+					/>
+				</td>
+			</tr>
+			<tr>
+				<td class="text-3xl border">2nd</td>
+				<td class="border">
+					<BaseCard
+						class="m-auto"
+						:key="questions[0].id"
+						:id="questions[0].id"
+						:date="questions[0].date"
+						:tags="questions[0].tag"
+						:bgColor="rankingBgColor"
+					/>
+				</td>
+				<td class="border">
+					<BaseCard
+						class="m-auto"
+						:key="questions[0].id"
+						:id="questions[0].id"
+						:date="questions[0].date"
+						:tags="questions[0].tag"
+						:bgColor="rankingBgColor"
+					/>
+				</td>
+			</tr>
+			<tr>
+				<td class="text-3xl border">3rd</td>
+				<td class="border">
+					<BaseCard
+						class="m-auto"
+						:key="questions[0].id"
+						:id="questions[0].id"
+						:date="questions[0].date"
+						:tags="questions[0].tag"
+						:bgColor="rankingBgColor"
+					/>
+				</td>
+				<td class="border">
+					<BaseCard
+						class="m-auto"
+						:key="questions[0].id"
+						:id="questions[0].id"
+						:date="questions[0].date"
+						:tags="questions[0].tag"
+						:bgColor="rankingBgColor"
+					/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </template>
 
 <style scoped>
