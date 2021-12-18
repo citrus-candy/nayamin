@@ -3,8 +3,8 @@ import '@/assets/css/tailwind.css'
 </script>
 
 <template>
-	<div>
+	<div class="flex">
 		<MenuBar />
-		<NuxtPage />
+		<NuxtPage class="w-full" />
 	</div>
 </template>
