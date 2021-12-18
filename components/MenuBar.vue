@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useAuthState } from '~~/composables/auth'
-
 type MenuBarContents = {
 	title: string
 	icon: string
@@ -17,6 +15,7 @@ const emit = defineEmits<Emits>()
 const showBar = ref(false)
 const showAuthModal = ref(false)
 const selectedIndex = ref(0)
+
 const menuBarContents: MenuBarContents[] = [
 	{
 		title: '悩みを聞いてみる',
@@ -59,20 +58,22 @@ watch(showBar, (value) => {
 				<FontAwesomeIcon icon="bars" class="w-10 h-10" />
 			</button>
 			<hr />
-			<button
+			<nuxt-link
 				v-for="(content, i) in menuBarContents"
 				:key="i"
-				class="w-full hover:bg-slate-100 py-2"
-				@click="selectedIndex = i"
+				:to="content.to"
 			>
-				<nuxt-link :to="content.to">
+				<button
+					class="w-full hover:bg-slate-100 py-2"
+					@click="selectedIndex = i"
+				>
 					<FontAwesomeIcon
 						:icon="content.icon"
 						class="w-9 h-9"
 						:class="{ [content.color]: i === selectedIndex }"
 					/>
-				</nuxt-link>
-			</button>
+				</button>
+			</nuxt-link>
 			<hr />
 			<button
 				v-if="!authState"

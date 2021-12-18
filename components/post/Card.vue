@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { CardColor } from '@/types'
+import { _getCardColor } from '@/composables'
+
 const text = ref('')
 const degree = ref('5')
 const bgColor = ref('bg-indigo-500')
@@ -11,71 +14,74 @@ const addPost = () => {
 	})
 }
 
-watch(degree, (value) => {
-	// ここはcomposablesにする
-	switch (value) {
-		case '1': {
-			bgColor.value = 'bg-indigo-50'
-			textColor.value = 'text-black'
-			break
-		}
-		case '2': {
-			bgColor.value = 'bg-indigo-100'
-			textColor.value = 'text-black'
-			break
-		}
-		case '3': {
-			bgColor.value = 'bg-indigo-200'
-			textColor.value = 'text-black'
-			break
-		}
-		case '4': {
-			bgColor.value = 'bg-indigo-300'
-			textColor.value = 'text-black'
-			break
-		}
-		case '5': {
-			bgColor.value = 'bg-indigo-400'
-			textColor.value = 'text-white'
-			break
-		}
-		case '6': {
-			bgColor.value = 'bg-indigo-500'
-			textColor.value = 'text-white'
-			break
-		}
-		case '7': {
-			bgColor.value = 'bg-indigo-600'
-			textColor.value = 'text-white'
-			break
-		}
-		case '8': {
-			bgColor.value = 'bg-indigo-700'
-			textColor.value = 'text-white'
-			break
-		}
-		case '9': {
-			bgColor.value = 'bg-indigo-800'
-			textColor.value = 'text-white'
-			break
-		}
-		case '10': {
-			bgColor.value = 'bg-indigo-900'
-			textColor.value = 'text-white'
-			break
+watch(degree, (degree) => {
+	const cardColor = (): CardColor => {
+		switch (degree) {
+			case '1':
+				return {
+					background: 'bg-indigo-50',
+					text: 'text-black',
+				}
+			case '2':
+				return {
+					background: 'bg-indigo-100',
+					text: 'text-black',
+				}
+			case '3':
+				return {
+					background: 'bg-indigo-200',
+					text: 'text-black',
+				}
+			case '4':
+				return {
+					background: 'bg-indigo-300',
+					text: 'text-black',
+				}
+			case '5':
+				return {
+					background: 'bg-indigo-400',
+					text: 'text-white',
+				}
+			case '6':
+				return {
+					background: 'bg-indigo-500',
+					text: 'text-white',
+				}
+			case '7':
+				return {
+					background: 'bg-indigo-600',
+					text: 'text-white',
+				}
+			case '8':
+				return {
+					background: 'bg-indigo-700',
+					text: 'text-white',
+				}
+			case '9':
+				return {
+					background: 'bg-indigo-800',
+					text: 'text-white',
+				}
+			case '10':
+				return {
+					background: 'bg-indigo-900',
+					text: 'text-white',
+				}
 		}
 	}
+	bgColor.value = cardColor().background
+	textColor.value = cardColor().text
 })
 </script>
 
 <template>
 	<div>
 		<div class="w-full h-full p-6 border rounded-2xl" :class="bgColor">
-			<InputTextArea 
-        v-model:value="text" 
-        :length-text-color="textColor" 
-        :placeholderText="'ここに悩みを書く'" 
-       />
+			<InputTextArea
+				v-model:value="text"
+				:length-text-color="textColor"
+				:placeholder-text="'ここに悩みを書く'"
+			/>
 			<div class="mb-3 text-2xl" :class="textColor">悩み度 {{ degree }}</div>
 			<div class="flex justify-between items-center">
 				<InputSlider
