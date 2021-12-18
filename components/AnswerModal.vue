@@ -1,14 +1,6 @@
 <template>
 	<div w-full>
-		<textarea
-			onkeyup="document.getElementById('count').innerText=this.value.length"
-			autofocus
-			cols="50"
-			rows="10"
-			maxlength="500"
-			required
-			class="w-full h-full break-words border border-black p-4 text-3xl"
-		></textarea>
+		<InputTextArea :placeholderText="''"></InputTextArea>
 		<div class="relative m-3">
 			<div></div>
 			<BaseButton class="absolute light-0 text-5xl"
