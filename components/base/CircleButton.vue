@@ -6,12 +6,10 @@ defineProps({
 </script>
 
 <template>
-	<div class="circle-button">
-		<button
-			class="h-24 w-24 flex items-center justify-center rounded-full shadow-md"
-			:class="[circleBgColor, circleHoverBgColor]"
-		>
-			<slot />
-		</button>
-	</div>
+	<button
+		class="h-20 w-20 flex items-center justify-center rounded-full shadow-md"
+		:class="[circleBgColor, circleHoverBgColor]"
+	>
+		<slot />
+	</button>
 </template>
