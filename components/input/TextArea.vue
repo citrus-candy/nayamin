@@ -3,6 +3,7 @@ const text = ref('')
 defineProps({
 	placeholderText: String,
 })
+</script>
 
 <template>
 	<div>
