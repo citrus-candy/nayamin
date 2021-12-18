@@ -5,6 +5,7 @@ export default defineComponent({
 	props: {
 		value: String,
 		lengthTextColor: String,
+	  placeholderText: String,
 	},
 	setup(props) {
 		const value = useVModel(props, 'value')
@@ -22,7 +23,7 @@ export default defineComponent({
 			cols="50"
 			rows="10"
 			maxlength="500"
-			placeholder="ここに悩みを書く"
+			:placeholder="placeholderText"
 			required
 			class="w-full h-full break-words border border-black p-4 focus:outline-none"
 		></textarea>

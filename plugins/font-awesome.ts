@@ -14,14 +14,16 @@ import {
 	faTimes,
 	faEye,
 	faEyeSlash,
-  faTag
+	faTag,
+	faSync,
+	faSearch,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(
 	faLeaf,
-  faChevronUp,
-  faChevronDown,
+	faChevronUp,
+	faChevronDown,
 	faArrowLeft,
 	faSignInAlt,
 	faSignOutAlt,
@@ -32,7 +34,9 @@ library.add(
 	faTimes,
 	faEye,
 	faEyeSlash,
-  faTag
+	faTag,
+	faSync,
+	faSearch
 )
 
 export default defineNuxtPlugin((nuxtApp) => {

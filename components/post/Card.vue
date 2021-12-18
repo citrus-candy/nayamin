@@ -71,7 +71,11 @@ watch(degree, (value) => {
 <template>
 	<div>
 		<div class="w-full h-full p-6 border rounded-2xl" :class="bgColor">
-			<InputTextArea v-model:value="text" :length-text-color="textColor" />
+			<InputTextArea 
+        v-model:value="text" 
+        :length-text-color="textColor" 
+        :placeholderText="'ここに悩みを書く'" 
+       />
 			<div class="mb-3 text-2xl" :class="textColor">悩み度 {{ degree }}</div>
 			<div class="flex justify-between items-center">
 				<InputSlider
