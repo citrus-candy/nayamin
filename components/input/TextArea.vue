@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+defineProps({
+	placeholderText: String,
+})
+</script>
+
 <template>
 	<div>
 		<textarea
@@ -6,7 +12,7 @@
 			cols="50"
 			rows="10"
 			maxlength="500"
-			placeholder="ここに悩みを書く"
+			:placeholder="placeholderText"
 			required
 			class="w-full h-full break-words border border-black p-4"
 		></textarea>
