@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import '@/assets/css/tailwind.css'
 
+const loading = ref(true)
 const marginLeft = ref('63px')
 const changeMargin = (value: boolean) => {
 	if (value) {
@@ -9,6 +10,12 @@ const changeMargin = (value: boolean) => {
 		marginLeft.value = '63px'
 	}
 }
+onMounted(() => {
+	_onAuthStateChanged()
+	setTimeout(() => {
+		loading.value = false
+	}, 1000)
+})
 </script>
 
 <template>
@@ -18,4 +25,21 @@ const changeMargin = (value: boolean) => {
 			<NuxtPage />
 		</div>
 	</div>
+	<transition>
+		<div
+			v-if="loading"
+			class="absolute top-0 w-screen h-screen bg-white flex justify-center items-center"
+		>
+			<p class="text-xl text-amber-400">Now Loading...</p>
+		</div>
+	</transition>
 </template>
+
+<style scoped>
+.v-leave-active {
+	transition: opacity 1s;
+}
+.v-leave-to {
+	opacity: 0;
+}
+</style>
