@@ -7,9 +7,11 @@ import {
 	updateDoc,
 	deleteDoc,
 	getDoc,
+	getDocs,
 	serverTimestamp,
 	Timestamp,
 } from 'firebase/firestore'
+import { Post } from '@/types'
 
 type Sample = {
 	name: string
@@ -17,6 +19,7 @@ type Sample = {
 	updated_at?: Timestamp
 }
 
+export const usePosts = () => useState<Post[]>('posts', () => [])
 export const useId = () => useState<string>('id', () => '')
 export const useSample = () =>
 	useState<Sample>('sample', () => ({
@@ -81,11 +84,27 @@ export const _addPost = async (text: string, degree: string) => {
 
 	await addDoc(collectionRef, {
 		user_id: userId.value,
-		name: text,
+		text: text,
 		degree: degree,
 		be_known: 0,
 		never_mind: 0,
 		created_at: serverTimestamp(),
 		updated_at: serverTimestamp(),
+	})
+}
+
+export const _getPost = async () => {
+	const db = getFirestore()
+	const collectionRef = collection(db, 'posts')
+	const querySnapshot = await getDocs(collectionRef)
+
+	const posts = usePosts()
+
+	posts.value.length = 0
+	querySnapshot.forEach((doc) => {
+		const data = doc.data() as Post
+		const postData: Post = { ...data }
+		postData.post_id = doc.id
+		posts.value.push(postData)
 	})
 }

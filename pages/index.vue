@@ -1,91 +1,50 @@
-<script setup lang="ts">
-const tags = [
-	{ id: '1', name: 'huga' },
-	{ id: '2', name: 'huga' },
-	{ id: '3', name: 'huga' },
-	{ id: '4', name: 'huga' },
-	{ id: '5', name: 'huga' },
-	{ id: '6', name: 'huga' },
-	{ id: '7', name: 'huga' },
-	{ id: '8', name: 'huga' },
-	{ id: '9', name: 'huga' },
-	{ id: '10', name: 'huga' },
-]
-const tests = [
-	{
-		id: '1',
-		content: 'houhsadgsakdhasdugh',
-		tag: [{ id: '1', text: 'huga' }],
-		date: '2021/7/8 12:32',
+<script lang="ts">
+export default defineComponent({
+	mounted() {
+		_getPost()
 	},
-	{
-		id: '2',
-		content: 'houhsadgsakdhasdugh',
-		tag: { id: '2', text: 'huga' },
-		date: '2021/7/8 12:32',
-	},
-	{
-		id: '3',
-		content:
-			'houhsadgsakdhasdughsdajkfhajkhkdjbkvkjshfuiausdjaufviujddddddddddddjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdhvuhawsvhuihaksdkfhaosfhuaowesdkjhfnjsakdhfnjk',
-		tag: { id: '3', text: 'hugas' },
-		date: '2021/7/8 12:32',
-	},
-	{
-		id: '4',
-		content: 'houhsadgsakdhasdugh',
-		tag: { id: '4', text: 'huga' },
-		date: '2021/7/8 12:32',
-	},
-	{
-		id: '5',
-		content: 'houhsadgsakdhasdugh',
-		tag: { id: '5', text: 'huga' },
-		date: '2021/7/8 12:32',
-	},
-	{
-		id: '6',
-		content: 'houhsadgsakdhasdugh',
-		tag: { id: '6', text: 'huga' },
-		date: '2021/7/8 12:32',
-	},
-	{
-		id: '7',
-		content: 'houhsadgsakdhasdugh',
-		tag: { id: '7', text: 'huga' },
-		date: '2021/7/8 12:32',
-	},
-]
+	setup() {
+		const posts = usePosts()
 
-const bgColor = 'bg-indigo-500'
-const bgColor1 = 'bg-orange-500'
+		const tabState = ref('unresolved')
+		const showModal = ref(false)
 
-const isTab = ref('unresolved')
-const showModal = ref(false)
+		const getPost = () => {
+			_getPost()
+		}
+
+		return {
+			posts,
+			tabState,
+			showModal,
+			getPost,
+		}
+	},
+})
 </script>
 
 <template>
 	<div>
 		<div class="flex h-16 border-b border-black justify-between items-center">
 			<div class="flex h-full">
-				<div
-					class="w-fit h-full border border-black px-7 text-xl flex items-center cursor-pointer bg-blue-200 hover:bg-blue-500"
-					:class="{ 'bg-blue-500': isTab === 'unresolved' }"
-					@click="isTab = 'unresolved'"
+				<button
+					class="w-fit h-full border border-black px-7 text-xl flex items-center bg-blue-200 hover:bg-blue-500"
+					:class="{ 'bg-blue-500': tabState === 'unresolved' }"
+					@click="tabState = 'unresolved'"
 				>
 					<span>未解決</span>
-				</div>
-				<div
-					class="w-fit h-full border border-black px-7 text-xl flex items-center cursor-pointer bg-orange-200 hover:bg-orange-500"
-					:class="{ 'bg-orange-500': isTab === 'resolved' }"
-					@click="isTab = 'resolved'"
+				</button>
+				<button
+					class="w-fit h-full border border-black px-7 text-xl flex items-center bg-orange-200 hover:bg-orange-500"
+					:class="{ 'bg-orange-500': tabState === 'resolved' }"
+					@click="tabState = 'resolved'"
 				>
 					<p>解決済み</p>
-				</div>
+				</button>
 			</div>
 			<div class="flex">
 				<div class="border border-black rounded mr-7">
-					<div @click="showModal = true" class="flex h-full cursor-pointer">
+					<button @click="showModal = true" class="flex h-full items-stretch">
 						<div class="border-r border-black flex items-center">
 							<FontAwesomeIcon
 								icon="search"
@@ -95,46 +54,27 @@ const showModal = ref(false)
 						<div class="flex items-center px-3">
 							<span>カテゴリで絞り込む</span>
 						</div>
-					</div>
-					<CategoryModal
+					</button>
+					<!-- <CategoryModal
 						v-if="showModal"
 						:type="'search'"
-						:tags="tags"
+						:tags="tabState"
 						@modalClose="showModal = false"
-					/>
+					/> -->
 				</div>
-				<div
-					class="flex items-center border border-black rounded h-10 w-10 mr-7 cursor-pointer"
+				<button
+					class="flex items-center border border-black rounded h-10 w-10 mr-7"
+					@click="getPost"
 				>
 					<FontAwesomeIcon icon="sync" class="w-5 h-5 text-gray-500 mx-2" />
-				</div>
+				</button>
 			</div>
 		</div>
-		<div v-if="isTab === 'unresolved'" class="list mx-60 my-24">
-			<BaseCard
-				v-for="test in tests"
-				:key="test.id"
-				:id="test.id"
-				:date="test.date"
-				:tags="test.tag"
-				:bgColor="bgColor"
-				class="w-full"
-			>
-				{{ test.content }}
-			</BaseCard>
+		<div v-if="tabState === 'unresolved'" class="list mx-60 my-24">
+			<BaseCard v-for="post in posts" class="w-full" :args="{ post: post }" />
 		</div>
-		<div v-if="isTab === 'resolved'" class="list mx-60 my-24">
-			<BaseCard
-				v-for="test in tests"
-				:key="test.id"
-				:id="test.id"
-				:date="test.date"
-				:tags="test.tag"
-				:bgColor="bgColor1"
-				class="w-full"
-			>
-				{{ test.content }}
-			</BaseCard>
+		<div v-if="tabState === 'resolved'" class="list mx-60 my-24">
+			<BaseCard v-for="post in posts" class="w-full" :args="{ post: post }" />
 		</div>
 	</div>
 </template>
