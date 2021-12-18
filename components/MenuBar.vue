@@ -12,6 +12,7 @@ const authState = useAuthState()
 
 const showBar = ref(false)
 const showAuthModal = ref(false)
+const selectedIndex = ref(0)
 const menuBarContents: MenuBarContents[] = [
 	{
 		title: '悩みを聞いてみる',
@@ -50,6 +51,31 @@ const signOut = () => {
 				<FontAwesomeIcon icon="bars" class="w-10 h-10" />
 			</button>
 			<hr />
+			<button
+				v-for="(content, i) in menuBarContents"
+				:key="i"
+				class="w-full hover:bg-slate-100 py-2"
+				@click="selectedIndex = i"
+			>
+				<nuxt-link :to="content.to">
+					<FontAwesomeIcon
+						:icon="content.icon"
+						class="w-9 h-9"
+						:class="{ [content.color]: i === selectedIndex }"
+					/>
+				</nuxt-link>
+			</button>
+			<hr />
+			<button
+				v-if="!authState"
+				class="w-full py-1 hover:bg-slate-100"
+				@click="showAuthModal = true"
+			>
+				<FontAwesomeIcon icon="sign-in-alt" class="w-9 h-9 text-blue-400" />
+			</button>
+			<button v-else class="w-full py-1 hover:bg-slate-100" @click="signOut">
+				<FontAwesomeIcon icon="sign-out-alt" class="w-9 h-9 text-red-500" />
+			</button>
 		</div>
 		<div v-show="showBar" class="w-64 border-r border-black h-screen">
 			<div class="flex justify-end">
@@ -64,12 +90,17 @@ const signOut = () => {
 				:key="i"
 				class="w-full py-4 px-5 flex items-center hover:bg-slate-100"
 				:to="content.to"
-				@click="showBar = false"
+				@click="
+					() => {
+						showBar = false
+						selectedIndex = i
+					}
+				"
 			>
 				<FontAwesomeIcon
 					:icon="content.icon"
 					class="w-6 h-6"
-					:class="content.color"
+					:class="{ [content.color]: i === selectedIndex }"
 				/>
 				<p class="ml-3">
 					{{ content.title }}
