@@ -1,16 +1,28 @@
+<script setup lang="ts">
+type Emits = {
+	(e: 'closeModal'): void
+}
+
+const text = ref('')
+const emit = defineEmits<Emits>()
+</script>
+
 <template>
-	<div w-full>
-		<InputTextArea :placeholderText="''"></InputTextArea>
-		<div class="relative m-3">
-			<div></div>
-			<BaseButton class="absolute light-0 text-5xl"
-				><p class="px-16 py-5">やめる</p></BaseButton
-			>
-			<button
-				class="absolute text-5xl bg-white text-black border border-black font-sans shadow-md rounded hover:bg-gray-100 right-0"
-			>
-				<p class="px-11 py-5">回答する</p>
-			</button>
+	<div
+		class="fixed bottom-[-2px] right-5 shadow-xl w-3/5 m-auto p-10 border border-black rounded bg-white z-10"
+	>
+		<InputTextArea
+			v-model:value="text"
+			placeholderText="悩みに回答する"
+			class="h-40"
+		/>
+		<div class="flex justify-between mt-10">
+			<BaseButton class="text-3xl" @click="emit('closeModal')">
+				<p class="px-4 py-1">やめる</p>
+			</BaseButton>
+			<BaseButton class="text-3xl">
+				<p class="px-4 py-1">回答する</p>
+			</BaseButton>
 		</div>
 	</div>
 </template>

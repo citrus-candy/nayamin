@@ -15,6 +15,7 @@ import {
 	faEye,
 	faEyeSlash,
 	faTag,
+	faCommentMedical,
 	faSync,
 	faSearch,
 } from '@fortawesome/free-solid-svg-icons'
@@ -35,6 +36,7 @@ library.add(
 	faEye,
 	faEyeSlash,
 	faTag,
+	faCommentMedical,
 	faSync,
 	faSearch
 )
