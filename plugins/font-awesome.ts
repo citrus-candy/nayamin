@@ -9,6 +9,7 @@ import {
 	faComments,
 	faCrown,
 	faBars,
+  faTag
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -20,7 +21,8 @@ library.add(
 	faCommentDots,
 	faComments,
 	faCrown,
-	faBars
+	faBars,
+  faTag
 )
 
 export default defineNuxtPlugin((nuxtApp) => {
