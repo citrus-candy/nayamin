@@ -1,9 +1,50 @@
 <script setup lang="ts">
+import { FirebaseError } from 'firebase/app'
+
 const showSignUpModal = ref(false)
+const email = ref('')
+const password = ref('')
+const errorMessage = ref('')
+
+const signIn = () => {
+	errorMessage.value = ''
+	_signIn(email.value, password.value)
+		.then(() => {
+			console.log('ログインに成功しました')
+		})
+		.catch((error: FirebaseError) => {
+			if (error.code === 'auth/user-not-found') {
+				errorMessage.value = 'ユーザーが見つかりません'
+			} else if (error.code === 'auth/wrong-password') {
+				errorMessage.value = 'パスワードが違います'
+			} else {
+				errorMessage.value = error.message
+			}
+		})
+}
+
+const signUp = () => {
+	errorMessage.value = ''
+	_signUp(email.value, password.value)
+		.then(() => {
+			console.log('新規登録に成功しました')
+		})
+		.catch((error) => {
+			if (error.code === 'auth/invalid-email') {
+				errorMessage.value = 'そのメールアドレスは無効です'
+			} else if (error.code === 'auth/invalid-password') {
+				errorMessage.value = 'パスワードは6文字以上にしてください'
+			} else {
+				errorMessage.value = error.message
+			}
+		})
+}
 </script>
 
 <template>
-	<div class="w-screen h-screen bg-slate-200 flex justify-center items-center">
+	<div
+		class="w-screen h-screen fixed bg-slate-200 bg-opacity-50 flex justify-center items-center"
+	>
 		<div class="w-96 rounded-xl border border-black bg-white">
 			<div v-if="!showSignUpModal">
 				<button class="text-left px-2 hover:bg-slate-100 rounded-tl-xl">
@@ -11,11 +52,12 @@ const showSignUpModal = ref(false)
 				</button>
 				<hr />
 				<div class="p-5 text-center">
-					<InputEmail class="mb-4" />
-					<InputPassword class="mb-4" />
-					<BaseButton>
+					<InputEmail v-model:value="email" class="mb-4" />
+					<InputPassword v-model:value="password" class="mb-4" />
+					<BaseButton class="mb-4" @click="signIn">
 						<p class="px-10 py-1 text-lg">ログイン</p>
 					</BaseButton>
+					<p class="text-red-500">{{ errorMessage }}</p>
 				</div>
 				<hr />
 				<div class="text-center my-4">
@@ -36,11 +78,12 @@ const showSignUpModal = ref(false)
 				</button>
 				<hr />
 				<div class="p-5 text-center">
-					<InputEmail class="mb-4" />
-					<InputPassword class="mb-4" />
-					<BaseButton>
+					<InputEmail v-model:value="email" class="mb-4" />
+					<InputPassword v-model:value="password" class="mb-4" />
+					<BaseButton class="mb-4" @click="signUp">
 						<p class="px-10 py-1 text-lg">新規登録</p>
 					</BaseButton>
+					<p class="text-red-500">{{ errorMessage }}</p>
 				</div>
 			</div>
 		</div>
