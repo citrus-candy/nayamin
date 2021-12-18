@@ -73,3 +73,19 @@ export const _getSampleName = async (collectionName: string) => {
 		useSample().value = docSnap.data() as Sample
 	}
 }
+
+export const _addPost = async (text: string, degree: string) => {
+	const db = getFirestore()
+	const userId = useUserId()
+	const collectionRef = collection(db, 'posts')
+
+	await addDoc(collectionRef, {
+		user_id: userId.value,
+		name: text,
+		degree: degree,
+		be_known: 0,
+		never_mind: 0,
+		created_at: serverTimestamp(),
+		updated_at: serverTimestamp(),
+	})
+}

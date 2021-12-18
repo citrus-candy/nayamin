@@ -16,6 +16,8 @@ import {
 	faEyeSlash,
 	faTag,
 	faCommentMedical,
+	faSync,
+	faSearch,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -35,6 +37,8 @@ library.add(
 	faEyeSlash,
 	faTag,
 	faCommentMedical
+	faSync,
+	faSearch
 )
 
 export default defineNuxtPlugin((nuxtApp) => {
