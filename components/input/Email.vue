@@ -19,9 +19,14 @@ export default defineComponent({
 		type="email"
 		pattern="^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$"
 		size="30"
-		autocomplete="on"
 		required
 		placeholder="メールアドレス"
-		class="border rounded border-black w-full h-12 px-3"
+		class="border rounded border-black w-full h-12 px-3 focus:outline-none"
 	/>
 </template>
+
+<style scoped>
+input:-webkit-autofill {
+	box-shadow: 0 0 0 1000px white inset;
+}
+</style>
