@@ -36,7 +36,7 @@ library.add(
 	faEye,
 	faEyeSlash,
 	faTag,
-	faCommentMedical
+	faCommentMedical,
 	faSync,
 	faSearch
 )
