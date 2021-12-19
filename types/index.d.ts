@@ -10,6 +10,12 @@ export interface Post {
 	created_at: Timestamp
 	updated_at: Timestamp
 }
+export interface Answer {
+	user_id: string
+	text: string
+	created_at: Timestamp
+	updated_at: Timestamp
+}
 
 export interface CardColor {
 	background: string
