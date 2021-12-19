@@ -72,7 +72,7 @@ const cardColor = (): CardColor => {
 
 <template>
 	<div
-		class="h-44 rounded-2xl px-4 py-1 shadow-lg"
+		class="base-card h-44 rounded-2xl px-4 py-1 shadow-lg"
 		:class="cardColor().background"
 	>
 		<nuxt-link :to="`/post/${post.args.post.post_id}`">
@@ -95,3 +95,12 @@ const cardColor = (): CardColor => {
 		</nuxt-link>
 	</div>
 </template>
+
+<style lang="css">
+.base-card {
+	transition: all 0.2s;
+}
+.base-card:hover {
+	transform: scale(1.1, 1.1);
+}
+</style>
