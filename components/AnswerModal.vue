@@ -1,10 +1,22 @@
 <script setup lang="ts">
+import { _addAnswer } from '~~/composables/firestore'
+import { useRoute } from 'vue-router'
+
 type Emits = {
 	(e: 'closeModal'): void
 }
 
 const text = ref('')
 const emit = defineEmits<Emits>()
+const id = useRoute().params.id as string
+
+const addAnswer = () => {
+	_addAnswer(text.value, id).then(async () => {
+		await _getAnswers(id)
+		emit('closeModal')
+		text.value = ''
+	})
+}
 </script>
 
 <template>
@@ -20,7 +32,7 @@ const emit = defineEmits<Emits>()
 			<BaseButton class="text-3xl" @click="emit('closeModal')">
 				<p class="px-4 py-1">やめる</p>
 			</BaseButton>
-			<BaseButton class="text-3xl">
+			<BaseButton class="text-3xl" @click="addAnswer">
 				<p class="px-4 py-1">回答する</p>
 			</BaseButton>
 		</div>

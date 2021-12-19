@@ -1,40 +1,97 @@
 <script setup lang="ts">
-const bgColor = 'bg-gray-400'
-const question = {
-	content: '腰が痛いです',
-	date: '2021/12/12 12:12',
-}
-const tags = [
-	{ id: '1', text: 'hoge' },
-	{ id: '2', text: 'hoge' },
-	{ id: '3', text: 'hoge' },
-]
-const answers = [
-	{ id: '1', text: 'hoge', time: '2021/12/12 12:12' },
-	{ id: '2', text: 'hoge', time: '2021/12/12 12:12' },
-	{ id: '3', text: 'hoge', time: '2021/12/12 12:12' },
-	{ id: '4', text: 'hoge', time: '2021/12/12 12:12' },
-	{ id: '5', text: 'hoge', time: '2021/12/12 12:12' },
-	{ id: '6', text: 'hoge', time: '2021/12/12 12:12' },
-]
+import { useRoute } from 'vue-router'
+import { CardColor } from '@/types'
+import { _getAnswers } from '~~/composables/firestore'
+
 const circleBgColor = ['bg-green-400', 'bg-orange-400']
 const circleHoverBgColor = ['hover:bg-green-500', 'hover:bg-orange-500']
+
 const showModal = ref(false)
+const showCard = ref(false)
+
+const post = usePost()
+const answers = useAnswers()
+
+onMounted(async () => {
+	const postId = useRoute().params.id as string
+	await _getPost(postId)
+	await _getAnswers(postId)
+	showCard.value = true
+})
+
+const cardColor = (): CardColor => {
+	switch (post.value.degree) {
+		case '1':
+			return {
+				background: 'bg-indigo-50',
+				text: 'text-black',
+			}
+		case '2':
+			return {
+				background: 'bg-indigo-100',
+				text: 'text-black',
+			}
+		case '3':
+			return {
+				background: 'bg-indigo-200',
+				text: 'text-black',
+			}
+		case '4':
+			return {
+				background: 'bg-indigo-300',
+				text: 'text-black',
+			}
+		case '5':
+			return {
+				background: 'bg-indigo-400',
+				text: 'text-white',
+			}
+		case '6':
+			return {
+				background: 'bg-indigo-500',
+				text: 'text-white',
+			}
+		case '7':
+			return {
+				background: 'bg-indigo-600',
+				text: 'text-white',
+			}
+		case '8':
+			return {
+				background: 'bg-indigo-700',
+				text: 'text-white',
+			}
+		case '9':
+			return {
+				background: 'bg-indigo-800',
+				text: 'text-white',
+			}
+		case '10':
+			return {
+				background: 'bg-indigo-900',
+				text: 'text-white',
+			}
+	}
+}
 </script>
 
 <template>
 	<div class="m-4">
 		<div class="flex items-center justify-center">
-			<div class="w-8/12">
-				<PostQuestionCard :bgColor="bgColor" :date="question.date" :tags="tags">
-					{{ question.content }}
+			<div v-if="showCard" class="w-8/12">
+				<PostQuestionCard
+					:bgColor="cardColor().background"
+					:date="post.created_at.toDate().toString()"
+					:tags="null"
+				>
+					<p :class="cardColor().text">{{ post.text }}</p>
 				</PostQuestionCard>
 				<div class="flex justify-center items-center flex-col m-10">
 					<PostAnswerCard
-						v-for="answer in answers"
-						:key="answer.id"
+						v-for="(answer, i) in answers"
+						:key="i"
 						:text="answer.text"
-						:time="answer.time"
+						:time="answer.created_at.toDate().toString()"
 						class="m-4"
 					/>
 				</div>
