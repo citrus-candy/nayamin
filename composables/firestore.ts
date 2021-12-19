@@ -11,6 +11,7 @@ import {
 	serverTimestamp,
 	Timestamp,
 	query,
+	where,
 	orderBy,
 } from 'firebase/firestore'
 import { Post, Answer } from '@/types'
@@ -33,6 +34,7 @@ export const usePost = () =>
 		updated_at: Timestamp.now(),
 	}))
 export const usePosts = () => useState<Post[]>('posts', () => [])
+export const useMyPosts = () => useState<Post[]>('myPosts', () => [])
 export const useAnswers = () => useState<Answer[]>('id', () => [])
 export const useId = () => useState<string>('id', () => '')
 export const useSample = () =>
@@ -148,6 +150,23 @@ export const _getPosts = async () => {
 		const postData: Post = { ...data }
 		postData.post_id = doc.id
 		posts.value.push(postData)
+	})
+}
+
+export const _getMyPost = async (userId: string) => {
+	const db = getFirestore()
+	const collectionRef = collection(db, 'posts')
+	const docQuery = query(collectionRef, where('user_id', '==', userId))
+	const querySnapshot = await getDocs(docQuery)
+
+	const myPosts = useMyPosts()
+
+	myPosts.value.length = 0
+	querySnapshot.forEach((doc) => {
+		const data = doc.data() as Post
+		const postData: Post = { ...data }
+		postData.post_id = doc.id
+		myPosts.value.push(postData)
 	})
 }
 
