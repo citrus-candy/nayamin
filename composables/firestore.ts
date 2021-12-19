@@ -10,8 +10,10 @@ import {
 	getDocs,
 	serverTimestamp,
 	Timestamp,
+	query,
+	orderBy,
 } from 'firebase/firestore'
-import { Post } from '@/types'
+import { Post, Answer } from '@/types'
 
 type Sample = {
 	name: string
@@ -31,6 +33,7 @@ export const usePost = () =>
 		updated_at: Timestamp.now(),
 	}))
 export const usePosts = () => useState<Post[]>('posts', () => [])
+export const useAnswers = () => useState<Answer[]>('id', () => [])
 export const useId = () => useState<string>('id', () => '')
 export const useSample = () =>
 	useState<Sample>('sample', () => ({
@@ -145,5 +148,34 @@ export const _getPosts = async () => {
 		const postData: Post = { ...data }
 		postData.post_id = doc.id
 		posts.value.push(postData)
+	})
+}
+
+export const _getAnswers = async (post_id: string) => {
+	const db = getFirestore()
+	const docRef = doc(collection(db, 'posts'), post_id)
+	const collectionRef = collection(docRef, 'answers')
+	const docQuery = query(collectionRef, orderBy('created_at', 'desc'))
+	const querySnapshot = await getDocs(docQuery)
+	const answers = useAnswers()
+
+	answers.value.length = 0
+	querySnapshot.forEach((doc) => {
+		const data = doc.data() as Answer
+		const answerData: Answer = { ...data }
+		answers.value.push(answerData)
+	})
+}
+
+export const _updatePostField = async (
+	docName: string,
+	key: string,
+	value: string
+) => {
+	const db = getFirestore()
+	const docRef = doc(db, 'posts', docName)
+	await updateDoc(docRef, {
+		[key]: value,
+		updated_at: serverTimestamp(),
 	})
 }

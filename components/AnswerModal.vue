@@ -11,9 +11,11 @@ const emit = defineEmits<Emits>()
 const id = useRoute().params.id as string
 
 const addAnswer = () => {
-	_addAnswer(text.value, id)
-	emit('closeModal')
-	text.value = ''
+	_addAnswer(text.value, id).then(async () => {
+		await _getAnswers(id)
+		emit('closeModal')
+		text.value = ''
+	})
 }
 </script>
 

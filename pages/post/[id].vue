@@ -1,24 +1,22 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { CardColor } from '@/types'
+import { _getAnswers } from '~~/composables/firestore'
 
 const circleBgColor = ['bg-green-400', 'bg-orange-400']
 const circleHoverBgColor = ['hover:bg-green-500', 'hover:bg-orange-500']
 
 const showModal = ref(false)
-const fullDate = ref('')
 const showCard = ref(false)
 
 const post = usePost()
+const answers = useAnswers()
 
 onMounted(async () => {
-	await _getPost(useRoute().params.id as string).then(() => {
-		const date = post.value.created_at.toDate()
-		fullDate.value = `${date.getFullYear()}/${
-			date.getMonth() + 1
-		}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-		showCard.value = true
-	})
+	const postId = useRoute().params.id as string
+	await _getPost(postId)
+	await _getAnswers(postId)
+	showCard.value = true
 })
 
 const cardColor = (): CardColor => {
@@ -80,23 +78,22 @@ const cardColor = (): CardColor => {
 <template>
 	<div class="m-4">
 		<div class="flex items-center justify-center">
-			<div class="w-8/12">
+			<div v-if="showCard" class="w-8/12">
 				<PostQuestionCard
-					v-if="showCard"
 					:bgColor="cardColor().background"
-					:date="fullDate"
+					:date="post.created_at.toDate().toString()"
 					:tags="null"
 				>
 					<p :class="cardColor().text">{{ post.text }}</p>
 				</PostQuestionCard>
 				<div class="flex justify-center items-center flex-col m-10">
-					<!-- <PostAnswerCard
-						v-for="answer in answers"
-						:key="answer.id"
+					<PostAnswerCard
+						v-for="(answer, i) in answers"
+						:key="i"
 						:text="answer.text"
-						:time="answer.time"
+						:time="answer.created_at.toDate().toString()"
 						class="m-4"
-					/> -->
+					/>
 				</div>
 			</div>
 		</div>
