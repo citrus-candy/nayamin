@@ -43,4 +43,8 @@ export default defineComponent({
 	border-radius: 50%;
 	-webkit-border-radius: 50%;
 }
+.slider::-webkit-slider-thumb:hover {
+	width: 30px;
+	height: 30px;
+}
 </style>
