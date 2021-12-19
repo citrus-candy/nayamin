@@ -207,6 +207,10 @@ export const _updatePostField = async (
 export const _getPostRankings = async () => {
 	const db = getFirestore()
 	const collectionRef = collection(db, 'posts')
+	const beKnownRanking = useBeKnownRanking()
+	const neverMindRanking = useNeverMindRanking()
+	beKnownRanking.value.length = 0
+	neverMindRanking.value.length = 0
 
 	const beKnownQuery = query(
 		collectionRef,
@@ -215,9 +219,9 @@ export const _getPostRankings = async () => {
 	)
 	const beKnownQuerySnapshot = await getDocs(beKnownQuery)
 	beKnownQuerySnapshot.forEach((doc) => {
-		const beKnownRanking = useBeKnownRanking()
 		const data = doc.data() as Post
 		const postData: Post = { ...data }
+		postData.post_id = doc.id
 		beKnownRanking.value.push(postData)
 	})
 
@@ -228,9 +232,9 @@ export const _getPostRankings = async () => {
 	)
 	const neverMindQuerySnapshot = await getDocs(neverMindQuery)
 	neverMindQuerySnapshot.forEach((doc) => {
-		const neverMindQuery = useNeverMindRanking()
 		const data = doc.data() as Post
 		const postData: Post = { ...data }
-		neverMindQuery.value.push(postData)
+		postData.post_id = doc.id
+		neverMindRanking.value.push(postData)
 	})
 }
