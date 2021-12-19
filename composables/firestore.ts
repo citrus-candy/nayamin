@@ -19,6 +19,17 @@ type Sample = {
 	updated_at?: Timestamp
 }
 
+export const usePost = () =>
+	useState<Post>('post', () => ({
+		user_id: '',
+		post_id: '',
+		text: '',
+		degree: '5',
+		be_known: 0,
+		never_mind: 0,
+		created_at: Timestamp.now(),
+		updated_at: Timestamp.now(),
+	}))
 export const usePosts = () => useState<Post[]>('posts', () => [])
 export const useId = () => useState<string>('id', () => '')
 export const useSample = () =>
@@ -93,7 +104,19 @@ export const _addPost = async (text: string, degree: string) => {
 	})
 }
 
-export const _getPost = async () => {
+export const _getPost = async (docName: string) => {
+	const db = getFirestore()
+	const docRef = doc(db, 'posts', docName)
+	const docSnap = await getDoc(docRef)
+
+	const post = usePost()
+
+	if (docSnap.exists()) {
+		post.value = docSnap.data() as Post
+	}
+}
+
+export const _getPosts = async () => {
 	const db = getFirestore()
 	const collectionRef = collection(db, 'posts')
 	const querySnapshot = await getDocs(collectionRef)

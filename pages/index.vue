@@ -1,25 +1,14 @@
-<script lang="ts">
-export default defineComponent({
-	mounted() {
-		_getPost()
-	},
-	setup() {
-		const posts = usePosts()
+<script setup lang="ts">
+const posts = usePosts()
 
-		const tabState = ref('unresolved')
-		const showModal = ref(false)
+const tabState = ref('unresolved')
 
-		const getPost = () => {
-			_getPost()
-		}
+const getPosts = () => {
+	_getPosts()
+}
 
-		return {
-			posts,
-			tabState,
-			showModal,
-			getPost,
-		}
-	},
+onMounted(() => {
+	_getPosts()
 })
 </script>
 
@@ -64,7 +53,7 @@ export default defineComponent({
 				</div>
 				<button
 					class="flex items-center border border-black rounded h-10 w-10 mr-7"
-					@click="getPost"
+					@click="getPosts"
 				>
 					<FontAwesomeIcon icon="sync" class="w-5 h-5 text-gray-500 mx-2" />
 				</button>
