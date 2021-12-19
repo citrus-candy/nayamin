@@ -104,6 +104,22 @@ export const _addPost = async (text: string, degree: string) => {
 	})
 }
 
+export const _addAnswer = async (text: string, post_id: string) => {
+	const db = getFirestore()
+	const userId = useUserId()
+	const collectionRef = collection(
+		doc(collection(db, 'posts'), post_id),
+		'answers'
+	)
+
+	await addDoc(collectionRef, {
+		user_id: userId.value,
+		text: text,
+		created_at: serverTimestamp(),
+		updated_at: serverTimestamp(),
+	})
+}
+
 export const _getPost = async (docName: string) => {
 	const db = getFirestore()
 	const docRef = doc(db, 'posts', docName)
