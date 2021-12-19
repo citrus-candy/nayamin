@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
 import { CardColor } from '@/types'
-import { _getAnswers } from '~~/composables/firestore'
 
 const circleBgColor = ['bg-green-400', 'bg-orange-400']
 const circleHoverBgColor = ['hover:bg-green-500', 'hover:bg-orange-500']
@@ -105,9 +103,9 @@ const cardColor = (): CardColor => {
 			:circleBgColor="circleBgColor[0]"
 			:circleHoverBgColor="circleHoverBgColor[0]"
 		>
-			<a @click="backRoute">
+			<nuxt-link to="/">
 				<FontAwesomeIcon icon="arrow-left" class="w-10 h-10 text-black mx-2" />
-			</a>
+			</nuxt-link>
 		</BaseCircleButton>
 		<BaseCircleButton
 			class="fixed right-10 bottom-10"
