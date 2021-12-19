@@ -17,59 +17,66 @@ onMounted(async () => {
 	showCard.value = true
 })
 
-const backRoute = () => {
-	useRouter().back()
-}
 const cardColor = (): CardColor => {
 	switch (post.value.degree) {
 		case '1':
 			return {
-				background: 'bg-indigo-50',
+				negativeColor: 'bg-indigo-50',
+				positiveColor: 'bg-orange-50',
 				text: 'text-black',
 			}
 		case '2':
 			return {
-				background: 'bg-indigo-100',
+				negativeColor: 'bg-indigo-100',
+				positiveColor: 'bg-orange-100',
 				text: 'text-black',
 			}
 		case '3':
 			return {
-				background: 'bg-indigo-200',
+				negativeColor: 'bg-indigo-200',
+				positiveColor: 'bg-orange-200',
 				text: 'text-black',
 			}
 		case '4':
 			return {
-				background: 'bg-indigo-300',
+				negativeColor: 'bg-indigo-300',
+				positiveColor: 'bg-orange-300',
 				text: 'text-black',
 			}
 		case '5':
 			return {
-				background: 'bg-indigo-400',
+				negativeColor: 'bg-indigo-400',
+				positiveColor: 'bg-orange-400',
 				text: 'text-white',
 			}
 		case '6':
 			return {
-				background: 'bg-indigo-500',
+				negativeColor: 'bg-indigo-500',
+				positiveColor: 'bg-orange-500',
 				text: 'text-white',
 			}
 		case '7':
 			return {
-				background: 'bg-indigo-600',
+				negativeColor: 'bg-indigo-600',
+				positiveColor: 'bg-orange-600',
 				text: 'text-white',
 			}
 		case '8':
 			return {
-				background: 'bg-indigo-700',
+				negativeColor: 'bg-indigo-700',
+				positiveColor: 'bg-orange-700',
 				text: 'text-white',
 			}
 		case '9':
 			return {
-				background: 'bg-indigo-800',
+				negativeColor: 'bg-indigo-800',
+				positiveColor: 'bg-orange-800',
 				text: 'text-white',
 			}
 		case '10':
 			return {
-				background: 'bg-indigo-900',
+				negativeColor: 'bg-indigo-900',
+				positiveColor: 'bg-orange-900',
 				text: 'text-white',
 			}
 	}
@@ -81,7 +88,11 @@ const cardColor = (): CardColor => {
 		<div class="flex items-center justify-center">
 			<div v-if="showCard" class="w-8/12">
 				<PostQuestionCard
-					:bgColor="cardColor().background"
+					:bgColor="
+						post.is_resolved
+							? cardColor().positiveColor
+							: cardColor().negativeColor
+					"
 					:date="post.created_at.toDate().toString()"
 					:tags="null"
 				>

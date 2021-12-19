@@ -7,6 +7,7 @@ export interface Post {
 	degree: string
 	be_known: number
 	never_mind: number
+	is_resolved: boolean
 	created_at: Timestamp
 	updated_at: Timestamp
 }
@@ -18,6 +19,7 @@ export interface Answer {
 }
 
 export interface CardColor {
-	background: string
+	negativeColor: string
+	positiveColor: string
 	text: string
 }

@@ -25,6 +25,12 @@ const increment = (key: string, value: number) => {
 	})
 }
 
+const updateResolved = (value: boolean) => {
+	_updatePostField(postId, 'is_resolved', value).then(() => {
+		_getPost(postId)
+	})
+}
+
 onMounted(() => {
 	beKnown.value = post.value.be_known
 	neverMind.value = post.value.never_mind
@@ -61,9 +67,15 @@ onMounted(() => {
 				</div>
 			</div>
 			<div class="flex">
-				<CategoryTag class="mx-1" v-for="tag in tags" :key="tag.id">
+				<!-- <CategoryTag class="mx-1" v-for="tag in tags" :key="tag.id">
 					<div>{{ tag.text }}</div>
-				</CategoryTag>
+				</CategoryTag> -->
+				<BaseButton v-if="!post.is_resolved" @click="updateResolved(true)">
+					<p class="text-base px-3 py-1">解決済みにする</p>
+				</BaseButton>
+				<BaseButton v-else @click="updateResolved(false)">
+					<p class="text-base px-3 py-1">未解決に戻す</p>
+				</BaseButton>
 			</div>
 		</div>
 	</div>

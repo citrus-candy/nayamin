@@ -31,6 +31,7 @@ export const usePost = () =>
 		degree: '5',
 		be_known: 0,
 		never_mind: 0,
+		is_resolved: false,
 		created_at: Timestamp.now(),
 		updated_at: Timestamp.now(),
 	}))
@@ -109,6 +110,7 @@ export const _addPost = async (text: string, degree: string) => {
 		degree: degree,
 		be_known: 0,
 		never_mind: 0,
+		is_resolved: false,
 		created_at: serverTimestamp(),
 		updated_at: serverTimestamp(),
 	})
@@ -194,7 +196,7 @@ export const _getAnswers = async (post_id: string) => {
 export const _updatePostField = async (
 	docName: string,
 	key: string,
-	value: string | number
+	value: string | number | boolean
 ) => {
 	const db = getFirestore()
 	const docRef = doc(db, 'posts', docName)

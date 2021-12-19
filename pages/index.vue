@@ -17,14 +17,14 @@ onMounted(() => {
 		<div class="flex h-16 border-b border-black justify-between items-center">
 			<div class="flex h-full">
 				<button
-					class="w-fit h-full border border-black px-7 text-xl flex items-center bg-blue-200 hover:bg-blue-500"
+					class="w-fit h-full border-r border-black px-7 text-xl flex items-center bg-blue-200 hover:bg-blue-500"
 					:class="{ 'bg-blue-500': tabState === 'unresolved' }"
 					@click="tabState = 'unresolved'"
 				>
 					<span>未解決</span>
 				</button>
 				<button
-					class="w-fit h-full border border-black px-7 text-xl flex items-center bg-orange-200 hover:bg-orange-500"
+					class="w-fit h-full border-r border-black px-7 text-xl flex items-center bg-orange-200 hover:bg-orange-500"
 					:class="{ 'bg-orange-500': tabState === 'resolved' }"
 					@click="tabState = 'resolved'"
 				>
@@ -32,7 +32,7 @@ onMounted(() => {
 				</button>
 			</div>
 			<div class="flex">
-				<div class="border border-black rounded mr-7">
+				<!-- <div class="border border-black rounded mr-7">
 					<button @click="showModal = true" class="flex h-full items-stretch">
 						<div class="border-r border-black flex items-center">
 							<FontAwesomeIcon
@@ -44,13 +44,13 @@ onMounted(() => {
 							<span>カテゴリで絞り込む</span>
 						</div>
 					</button>
-					<!-- <CategoryModal
+					<CategoryModal
 						v-if="showModal"
 						:type="'search'"
 						:tags="tabState"
 						@modalClose="showModal = false"
-					/> -->
-				</div>
+					/>
+				</div> -->
 				<button
 					class="flex items-center border border-black rounded h-10 w-10 mr-7"
 					@click="getPosts"
@@ -60,10 +60,20 @@ onMounted(() => {
 			</div>
 		</div>
 		<div v-if="tabState === 'unresolved'" class="list mx-60 my-24">
-			<BaseCard v-for="post in posts" class="w-full" :args="{ post: post }" />
+			<BaseCard
+				v-for="post in posts"
+				class="w-full"
+				:args="{ post: post }"
+				:is-positive="true"
+			/>
 		</div>
 		<div v-if="tabState === 'resolved'" class="list mx-60 my-24">
-			<BaseCard v-for="post in posts" class="w-full" :args="{ post: post }" />
+			<BaseCard
+				v-for="post in posts"
+				class="w-full"
+				:args="{ post: post }"
+				:is-positive="false"
+			/>
 		</div>
 	</div>
 </template>
