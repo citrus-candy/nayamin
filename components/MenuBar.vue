@@ -33,13 +33,13 @@ const menuBarContents: MenuBarContents[] = [
 		title: 'ランキング',
 		icon: 'crown',
 		color: 'text-yellow-400',
-		to: 'ranking',
+		to: '/ranking',
 	},
 	{
 		title: '自分の投稿',
 		icon: 'user',
 		color: 'text-rose-400',
-		to: 'mypost',
+		to: '/mypost',
 	},
 ]
 const signOut = () => {
