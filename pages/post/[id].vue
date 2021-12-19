@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { CardColor } from '@/types'
 import { _getAnswers } from '~~/composables/firestore'
 
@@ -19,6 +19,9 @@ onMounted(async () => {
 	showCard.value = true
 })
 
+const backRoute = () => {
+	useRouter().back()
+}
 const cardColor = (): CardColor => {
 	switch (post.value.degree) {
 		case '1':
@@ -102,9 +105,9 @@ const cardColor = (): CardColor => {
 			:circleBgColor="circleBgColor[0]"
 			:circleHoverBgColor="circleHoverBgColor[0]"
 		>
-			<nuxt-link to="/">
+			<a @click="backRoute">
 				<FontAwesomeIcon icon="arrow-left" class="w-10 h-10 text-black mx-2" />
-			</nuxt-link>
+			</a>
 		</BaseCircleButton>
 		<BaseCircleButton
 			class="fixed right-10 bottom-10"
