@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
 import { CardColor } from '@/types'
-import { _getAnswers } from '~~/composables/firestore'
 
 const circleBgColor = ['bg-green-400', 'bg-orange-400']
 const circleHoverBgColor = ['hover:bg-green-500', 'hover:bg-orange-500']
@@ -19,6 +17,9 @@ onMounted(async () => {
 	showCard.value = true
 })
 
+const backRoute = () => {
+	useRouter().back()
+}
 const cardColor = (): CardColor => {
 	switch (post.value.degree) {
 		case '1':

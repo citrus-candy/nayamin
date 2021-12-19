@@ -13,6 +13,7 @@ import {
 	query,
 	where,
 	orderBy,
+	limit,
 } from 'firebase/firestore'
 import { Post, Answer } from '@/types'
 
@@ -36,6 +37,10 @@ export const usePost = () =>
 export const usePosts = () => useState<Post[]>('posts', () => [])
 export const useMyPosts = () => useState<Post[]>('myPosts', () => [])
 export const useAnswers = () => useState<Answer[]>('id', () => [])
+export const useBeKnownRanking = () =>
+	useState<Post[]>('beKnownRanking', () => [])
+export const useNeverMindRanking = () =>
+	useState<Post[]>('neverMindRanking', () => [])
 export const useId = () => useState<string>('id', () => '')
 export const useSample = () =>
 	useState<Sample>('sample', () => ({
@@ -196,5 +201,40 @@ export const _updatePostField = async (
 	await updateDoc(docRef, {
 		[key]: value,
 		updated_at: serverTimestamp(),
+	})
+}
+
+export const _getPostRankings = async () => {
+	const db = getFirestore()
+	const collectionRef = collection(db, 'posts')
+	const beKnownRanking = useBeKnownRanking()
+	const neverMindRanking = useNeverMindRanking()
+	beKnownRanking.value.length = 0
+	neverMindRanking.value.length = 0
+
+	const beKnownQuery = query(
+		collectionRef,
+		orderBy('be_known', 'desc'),
+		limit(3)
+	)
+	const beKnownQuerySnapshot = await getDocs(beKnownQuery)
+	beKnownQuerySnapshot.forEach((doc) => {
+		const data = doc.data() as Post
+		const postData: Post = { ...data }
+		postData.post_id = doc.id
+		beKnownRanking.value.push(postData)
+	})
+
+	const neverMindQuery = query(
+		collectionRef,
+		orderBy('never_mind', 'desc'),
+		limit(3)
+	)
+	const neverMindQuerySnapshot = await getDocs(neverMindQuery)
+	neverMindQuerySnapshot.forEach((doc) => {
+		const data = doc.data() as Post
+		const postData: Post = { ...data }
+		postData.post_id = doc.id
+		neverMindRanking.value.push(postData)
 	})
 }
