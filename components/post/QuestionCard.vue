@@ -12,6 +12,7 @@ const beKnown = ref(0)
 const neverMind = ref(0)
 
 const post = usePost()
+const userId = useUserId()
 const postId = useRoute().params.id as string
 
 const increment = (key: string, value: number) => {
@@ -66,7 +67,7 @@ onMounted(() => {
 					<span class="text-base px-3 py-1">{{ neverMind }}</span>
 				</div>
 			</div>
-			<div class="flex">
+			<div class="flex" v-if="userId === post.user_id">
 				<!-- <CategoryTag class="mx-1" v-for="tag in tags" :key="tag.id">
 					<div>{{ tag.text }}</div>
 				</CategoryTag> -->
