@@ -1,25 +1,11 @@
-<script lang="ts">
-export default defineComponent({
-	mounted() {
-		_getPost()
-	},
-	setup() {
-		const posts = usePosts()
+<script setup lang="ts">
+import { _getMyPost } from '~~/composables/firestore'
 
-		const tabState = ref('unresolved')
-		const showModal = ref(false)
+const myPosts = useMyPosts()
+const userId = useUserId()
 
-		const getPost = () => {
-			_getPost()
-		}
-
-		return {
-			posts,
-			tabState,
-			showModal,
-			getPost,
-		}
-	},
+onMounted(() => {
+	_getMyPost(userId.value)
 })
 </script>
 
@@ -31,10 +17,10 @@ export default defineComponent({
 		<div>
 			<div class="list mx-60 my-24">
 				<BaseCard
-					v-for="(post, id) in posts"
+					v-for="(myPost, id) in myPosts"
 					:key="id"
 					class="w-full"
-					:args="{ post: post }"
+					:args="{ post: myPost }"
 				/>
 			</div>
 		</div>
