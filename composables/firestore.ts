@@ -170,7 +170,7 @@ export const _getAnswers = async (post_id: string) => {
 export const _updatePostField = async (
 	docName: string,
 	key: string,
-	value: string
+	value: string | number
 ) => {
 	const db = getFirestore()
 	const docRef = doc(db, 'posts', docName)
