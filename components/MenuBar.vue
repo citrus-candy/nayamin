@@ -35,6 +35,12 @@ const menuBarContents: MenuBarContents[] = [
 		color: 'text-yellow-400',
 		to: 'ranking',
 	},
+	{
+		title: '自分の投稿',
+		icon: 'user',
+		color: 'text-rose-400',
+		to: 'mypost',
+	},
 ]
 const signOut = () => {
 	_signOut()
