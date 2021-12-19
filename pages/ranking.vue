@@ -1,57 +1,20 @@
 <script setup lang="ts">
-const questions = [
-	{
-		id: '1',
-		content: 'houhsadgsakdhasdugh',
-		tag: [{ id: '1', text: 'huga' }],
-		date: '2021/7/8 12:32',
-	},
-	{
-		id: '2',
-		content: 'houhsadgsakdhasdugh',
-		tag: [{ id: '1', text: 'huga' }],
-		date: '2021/7/8 12:32',
-	},
-	{
-		id: '3',
-		content:
-			'houhsadgsakdhasdughsdajkfhajkhkdjbkvkjshfuiausdjaufviujddddddddddddjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdhvuhawsvhuihaksdkfhaosfhuaowesdkjhfnjsakdhfnjk',
-		tag: { id: '3', text: 'hugas' },
-		date: '2021/7/8 12:32',
-	},
-	{
-		id: '4',
-		content: 'houhsadgsakdhasdugh',
-		tag: { id: '4', text: 'huga' },
-		date: '2021/7/8 12:32',
-	},
-	{
-		id: '5',
-		content: 'houhsadgsakdhasdugh',
-		tag: { id: '5', text: 'huga' },
-		date: '2021/7/8 12:32',
-	},
-	{
-		id: '6',
-		content: 'houhsadgsakdhasdugh',
-		tag: { id: '6', text: 'huga' },
-		date: '2021/7/8 12:32',
-	},
-	{
-		id: '7',
-		content: 'houhsadgsakdhasdugh',
-		tag: { id: '7', text: 'huga' },
-		date: '2021/7/8 12:32',
-	},
-]
+import { _getPostRankings } from '~~/composables/firestore'
 
-const rankingIndex = 10
+const beKnownRanking = useBeKnownRanking()
+const neverMindRanking = useNeverMindRanking()
+const showRanking = ref(false)
 
-const rankingBgColor = 'bg-indigo-500'
+onMounted(() => {
+	showRanking.value = false
+	_getPostRankings().then(() => {
+		showRanking.value = true
+	})
+})
 </script>
 
 <template>
-	<table class="border-collapse text-center">
+	<table class="w-full h-screen border-collapse text-center" v-if="showRanking">
 		<thead>
 			<tr>
 				<td class="border w-1/5 h-14 bg-amber-50"></td>
@@ -62,71 +25,29 @@ const rankingBgColor = 'bg-indigo-500'
 		<tbody>
 			<tr>
 				<td class="text-3xl border">1st</td>
-				<td class="border">
-					<BaseCard
-						class="m-auto"
-						:key="questions[0].id"
-						:id="questions[0].id"
-						:date="questions[0].date"
-						:tags="questions[0].tag"
-						:bgColor="rankingBgColor"
-					/>
+				<td class="border px-10">
+					<BaseCard :args="{ post: beKnownRanking[0] }" />
 				</td>
-				<td class="border">
-					<BaseCard
-						class="m-auto"
-						:key="questions[0].id"
-						:id="questions[0].id"
-						:date="questions[0].date"
-						:tags="questions[0].tag"
-						:bgColor="rankingBgColor"
-					/>
+				<td class="border px-10">
+					<BaseCard :args="{ post: neverMindRanking[0] }" />
 				</td>
 			</tr>
 			<tr>
 				<td class="text-3xl border">2nd</td>
-				<td class="border">
-					<BaseCard
-						class="m-auto"
-						:key="questions[0].id"
-						:id="questions[0].id"
-						:date="questions[0].date"
-						:tags="questions[0].tag"
-						:bgColor="rankingBgColor"
-					/>
+				<td class="border px-10">
+					<BaseCard :args="{ post: beKnownRanking[1] }" />
 				</td>
-				<td class="border">
-					<BaseCard
-						class="m-auto"
-						:key="questions[0].id"
-						:id="questions[0].id"
-						:date="questions[0].date"
-						:tags="questions[0].tag"
-						:bgColor="rankingBgColor"
-					/>
+				<td class="border px-10">
+					<BaseCard :args="{ post: neverMindRanking[1] }" />
 				</td>
 			</tr>
 			<tr>
 				<td class="text-3xl border">3rd</td>
-				<td class="border">
-					<BaseCard
-						class="m-auto"
-						:key="questions[0].id"
-						:id="questions[0].id"
-						:date="questions[0].date"
-						:tags="questions[0].tag"
-						:bgColor="rankingBgColor"
-					/>
+				<td class="border px-10">
+					<BaseCard :args="{ post: beKnownRanking[2] }" />
 				</td>
-				<td class="border">
-					<BaseCard
-						class="m-auto"
-						:key="questions[0].id"
-						:id="questions[0].id"
-						:date="questions[0].date"
-						:tags="questions[0].tag"
-						:bgColor="rankingBgColor"
-					/>
+				<td class="border px-10">
+					<BaseCard :args="{ post: neverMindRanking[2] }" />
 				</td>
 			</tr>
 		</tbody>
